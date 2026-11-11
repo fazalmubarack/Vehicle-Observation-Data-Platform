@@ -11,3 +11,4 @@ export const LoadingSpinner = ({ size = 24, text = 'Loading data...' }) => {
 };
 
 export default LoadingSpinner;
+

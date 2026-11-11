@@ -109,3 +109,4 @@ describe('Analytics and Histogram Module', () => {
     });
   });
 });
+

@@ -31,3 +31,4 @@ export const Alert = ({ type = 'error', message, onClose, className = '' }) => {
 };
 
 export default Alert;
+

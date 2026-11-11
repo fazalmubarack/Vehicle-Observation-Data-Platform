@@ -25,3 +25,4 @@ router.get('/:datasetId/histogram', getDatasetHistogram);
 router.get('/:datasetId/status', getDatasetStatus);
 
 module.exports = router;
+

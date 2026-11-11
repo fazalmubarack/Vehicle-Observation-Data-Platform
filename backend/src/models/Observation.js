@@ -43,3 +43,4 @@ observationSchema.index({ datasetId: 1, x: 1 });
 observationSchema.index({ datasetId: 1, y: 1 });
 
 module.exports = mongoose.model('Observation', observationSchema);
+

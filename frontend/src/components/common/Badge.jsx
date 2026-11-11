@@ -25,3 +25,4 @@ export const Badge = ({ status, children, variant }) => {
 };
 
 export default Badge;
+

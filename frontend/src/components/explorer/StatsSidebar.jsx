@@ -95,3 +95,4 @@ export const StatsSidebar = ({ statistics, loading }) => {
 };
 
 export default StatsSidebar;
+

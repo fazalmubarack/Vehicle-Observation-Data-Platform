@@ -279,3 +279,4 @@ npm test
   - Accurate calculation of Min, Median, and Max coordinates.
   - Histogram binning with labeled intervals and frequency counts.
   - Propagation of active filters (`vehicleClass`, `from`, `to`) to records, statistics, and histogram bins simultaneously.
+

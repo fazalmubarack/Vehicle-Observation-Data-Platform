@@ -124,3 +124,4 @@ export const HistogramChart = ({
 };
 
 export default HistogramChart;
+
