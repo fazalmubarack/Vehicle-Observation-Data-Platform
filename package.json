@@ -1,0 +1,27 @@
+{
+  "name": "vehicle-observation-data-platform",
+  "version": "1.0.0",
+  "description": "Vehicle Observation Data Platform - Full Stack SaaS Application",
+  "private": true,
+  "scripts": {
+    "install:all": "npm --prefix backend install && npm --prefix frontend install",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build:frontend": "npm --prefix frontend run build",
+    "test:backend": "npm --prefix backend test",
+    "seed:backend": "npm --prefix backend run seed",
+    "test": "npm --prefix backend test"
+  },
+  "keywords": [
+    "react",
+    "nodejs",
+    "express",
+    "mongodb",
+    "csv-parser",
+    "recharts",
+    "jwt",
+    "jest"
+  ],
+  "author": "Antigravity & Candidate",
+  "license": "ISC"
+}
