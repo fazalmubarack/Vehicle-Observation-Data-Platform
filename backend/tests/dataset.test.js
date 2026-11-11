@@ -115,17 +115,15 @@ describe('Dataset Explorer and Records Module', () => {
         .set('Authorization', `Bearer ${userAToken}`);
 
       expect(res.status).toBe(200);
-      expect(res.body.records.length).toBe(3); // In sample CSV there are 3 trucks
+      expect(res.body.records.length).toBe(3);
       res.body.records.forEach((rec) => {
-        expect(rec.vehicle_class).toBe('truck');
+        expect(rec.vehicle_class.toLowerCase()).toBe('truck');
       });
     });
 
     it('should filter records by time range (from and to)', async () => {
       const res = await request(app)
-        .get(
-          `/api/datasets/${datasetAId}/records?from=2026-03-29T08:00:01.000Z&to=2026-03-29T08:00:05.800Z`
-        )
+        .get(`/api/datasets/${datasetAId}/records?from=08:00:23&to=08:01:21`)
         .set('Authorization', `Bearer ${userAToken}`);
 
       expect(res.status).toBe(200);
@@ -145,4 +143,3 @@ describe('Dataset Explorer and Records Module', () => {
     });
   });
 });
-

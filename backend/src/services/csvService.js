@@ -12,6 +12,37 @@ const computeFileHash = (buffer) => {
 };
 
 /**
+ * Validate timestamp supporting ISO strings, date-time strings, and HH:mm:ss formats
+ * @param {string} timeStr
+ * @returns {boolean}
+ */
+const validateTimestamp = (timeStr) => {
+  if (!timeStr || typeof timeStr !== 'string') return false;
+  const trimmed = timeStr.trim();
+  if (trimmed === '') return false;
+
+  // 1. Common observation time format: HH:mm:ss, HH:mm:ss.SSS, H:m:s
+  const timeRegex = /^([01]?\d|2[0-3]):[0-5]?\d(:[0-5]?\d(\.\d{1,6})?)?$/;
+  if (timeRegex.test(trimmed)) {
+    return true;
+  }
+
+  // 2. Standard ISO 8601 or Date-time format
+  const parsed = new Date(trimmed);
+  if (!isNaN(parsed.getTime())) {
+    return true;
+  }
+
+  // 3. Fallback check with ISO date prefix
+  const dummyDate = new Date(`1970-01-01T${trimmed}Z`);
+  if (!isNaN(dummyDate.getTime())) {
+    return true;
+  }
+
+  return false;
+};
+
+/**
  * Parse CSV buffer into validated records or return detailed validation errors
  * @param {Buffer} buffer
  * @returns {Promise<{ records: Array, rowCount: number }>}
@@ -33,7 +64,7 @@ const parseAndValidateCsv = (buffer) => {
         })
       )
       .on('headers', (headers) => {
-        // Normalize headers
+        // Normalize headers (case-insensitive matching)
         const normalized = headers.map((h) => h.trim());
         const timeHeader = normalized.find((h) => h.toLowerCase() === 'time');
         const classHeader = normalized.find(
@@ -118,11 +149,11 @@ const parseAndValidateCsv = (buffer) => {
           return;
         }
 
-        // 2. Timestamp validation
-        const parsedTime = new Date(rawTime.trim());
-        if (isNaN(parsedTime.getTime())) {
+        // 2. Timestamp validation (preserves original format)
+        const rawTimeTrimmed = rawTime.toString().trim();
+        if (!validateTimestamp(rawTimeTrimmed)) {
           validationErrors.push(
-            `Row ${rowNumber}: Invalid timestamp format "${rawTime}". Must be a valid ISO or date-time string.`
+            `Row ${rowNumber}: Invalid timestamp format "${rawTime}". Must be a valid time (HH:mm:ss) or date-time string.`
           );
           return;
         }
@@ -146,7 +177,7 @@ const parseAndValidateCsv = (buffer) => {
         }
 
         records.push({
-          time: parsedTime,
+          time: rawTimeTrimmed,
           vehicle_class: rawClass.toString().trim(),
           x: parsedX,
           y: parsedY,
@@ -269,8 +300,8 @@ const importDatasetWithRollback = async (userId, fileName, buffer) => {
 };
 
 module.exports = {
+  validateTimestamp,
   computeFileHash,
   parseAndValidateCsv,
   importDatasetWithRollback,
 };
-

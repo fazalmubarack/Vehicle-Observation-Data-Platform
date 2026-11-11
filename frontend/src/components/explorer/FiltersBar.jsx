@@ -1,5 +1,5 @@
 import React from 'react';
-import { Filter, RotateCcw, Calendar, Truck } from 'lucide-react';
+import { Filter, RotateCcw, Clock, Truck } from 'lucide-react';
 
 export const FiltersBar = ({
   vehicleClass,
@@ -56,12 +56,13 @@ export const FiltersBar = ({
         {/* From Time Filter */}
         <div className="filter-group">
           <label className="filter-label">
-            <Calendar size={14} />
+            <Clock size={14} />
             <span>From Time</span>
           </label>
           <input
-            type="datetime-local"
+            type="text"
             className="form-control"
+            placeholder="e.g. 08:00:00 or ISO date"
             value={fromTime}
             onChange={(e) => setFromTime(e.target.value)}
           />
@@ -70,12 +71,13 @@ export const FiltersBar = ({
         {/* To Time Filter */}
         <div className="filter-group">
           <label className="filter-label">
-            <Calendar size={14} />
+            <Clock size={14} />
             <span>To Time</span>
           </label>
           <input
-            type="datetime-local"
+            type="text"
             className="form-control"
+            placeholder="e.g. 08:05:00 or ISO date"
             value={toTime}
             onChange={(e) => setToTime(e.target.value)}
           />
@@ -86,4 +88,3 @@ export const FiltersBar = ({
 };
 
 export default FiltersBar;
-

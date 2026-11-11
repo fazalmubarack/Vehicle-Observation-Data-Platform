@@ -11,24 +11,18 @@ const buildObservationFilter = (datasetId, query = {}) => {
   };
 
   if (query.vehicleClass && query.vehicleClass.trim() !== '') {
-    filter.vehicle_class = query.vehicleClass.trim();
+    // Case-insensitive vehicle class filter
+    filter.vehicle_class = new RegExp(`^${query.vehicleClass.trim()}$`, 'i');
   }
 
   if (query.from || query.to) {
     filter.time = {};
-    if (query.from) {
-      const fromDate = new Date(query.from);
-      if (!isNaN(fromDate.getTime())) {
-        filter.time.$gte = fromDate;
-      }
+    if (query.from && query.from.trim() !== '') {
+      filter.time.$gte = query.from.trim();
     }
-    if (query.to) {
-      const toDate = new Date(query.to);
-      if (!isNaN(toDate.getTime())) {
-        filter.time.$lte = toDate;
-      }
+    if (query.to && query.to.trim() !== '') {
+      filter.time.$lte = query.to.trim();
     }
-    // Clean empty time filter if invalid dates passed
     if (Object.keys(filter.time).length === 0) {
       delete filter.time;
     }
@@ -47,8 +41,7 @@ const getRecords = async (datasetId, query = {}) => {
   const pageSize = Math.min(100, Math.max(1, parseInt(query.pageSize, 10) || 20));
   const skip = (page - 1) * pageSize;
 
-  // Build sort options
-  // e.g., 'time:asc', 'time:desc', 'x:asc', 'y:desc'
+  // Build sort options (e.g., 'time:asc', 'time:desc', 'x:asc', 'y:desc')
   const sortOptions = {};
   if (query.sort) {
     const [field, direction] = query.sort.split(':');
@@ -164,4 +157,3 @@ module.exports = {
   getStatistics,
   getHistogram,
 };
-

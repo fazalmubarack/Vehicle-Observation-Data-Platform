@@ -65,12 +65,12 @@ export const DatasetExplorerPage = () => {
     fetchDatasetMetadata();
   }, [datasetId]);
 
-  // Construct query params object for server requests
+  // Construct query params object for server requests (preserves timestamp format)
   const buildQueryParams = useCallback(() => {
     const params = {};
     if (vehicleClass) params.vehicleClass = vehicleClass;
-    if (fromTime) params.from = new Date(fromTime).toISOString();
-    if (toTime) params.to = new Date(toTime).toISOString();
+    if (fromTime && fromTime.trim() !== '') params.from = fromTime.trim();
+    if (toTime && toTime.trim() !== '') params.to = toTime.trim();
     return params;
   }, [vehicleClass, fromTime, toTime]);
 
@@ -282,4 +282,3 @@ export const DatasetExplorerPage = () => {
 };
 
 export default DatasetExplorerPage;
-

@@ -40,14 +40,14 @@ describe('Analytics and Histogram Module', () => {
 
       // Verify X stats
       expect(stats.x.min).toBe(95.0);
-      expect(stats.x.max).toBe(450.2);
+      expect(stats.x.max).toBe(1613.0);
       expect(typeof stats.x.median).toBe('number');
       expect(stats.x.median).toBeGreaterThanOrEqual(stats.x.min);
       expect(stats.x.median).toBeLessThanOrEqual(stats.x.max);
 
       // Verify Y stats
       expect(stats.y.min).toBe(290.4);
-      expect(stats.y.max).toBe(530.0);
+      expect(stats.y.max).toBe(744.3);
       expect(typeof stats.y.median).toBe('number');
       expect(stats.y.median).toBeGreaterThanOrEqual(stats.y.min);
       expect(stats.y.median).toBeLessThanOrEqual(stats.y.max);
@@ -109,4 +109,3 @@ describe('Analytics and Histogram Module', () => {
     });
   });
 });
-

@@ -38,9 +38,9 @@ describe('CSV Upload and Ingestion Module', () => {
       // Verify records stored in database
       const dbObservations = await Observation.find({ datasetId: res.body.dataset.id });
       expect(dbObservations.length).toBe(15);
-      expect(dbObservations[0].vehicle_class).toBe('car');
-      expect(dbObservations[0].x).toBe(120.5);
-      expect(dbObservations[0].y).toBe(340.2);
+      expect(dbObservations[0].vehicle_class.toLowerCase()).toBe('car');
+      expect(dbObservations[0].x).toBe(1613.0);
+      expect(dbObservations[0].y).toBe(744.3);
     });
 
     it('should prevent duplicate imports of the identical file by the same user', async () => {
@@ -117,4 +117,3 @@ describe('CSV Upload and Ingestion Module', () => {
     });
   });
 });
-

@@ -58,14 +58,9 @@ export const RecordsTable = ({
     );
   };
 
-  const formatTimestamp = (iso) => {
-    if (!iso) return '—';
-    try {
-      const d = new Date(iso);
-      return d.toISOString();
-    } catch {
-      return iso;
-    }
+  const formatTimestamp = (raw) => {
+    if (!raw) return '—';
+    return String(raw);
   };
 
   return (
@@ -124,7 +119,7 @@ export const RecordsTable = ({
                     onClick={() => handleSortClick('time')}
                   >
                     <div className="th-sort-content">
-                      <span>Time (UTC)</span>
+                      <span>Time</span>
                       {renderSortIndicator('time')}
                     </div>
                   </th>
@@ -160,7 +155,7 @@ export const RecordsTable = ({
               <tbody>
                 {records.map((rec) => (
                   <tr key={rec.id} className="hover-row">
-                    <td className="font-mono text-xs text-navy">
+                    <td className="font-mono text-xs text-navy font-semibold">
                       {formatTimestamp(rec.time)}
                     </td>
                     <td>
@@ -169,10 +164,10 @@ export const RecordsTable = ({
                       </span>
                     </td>
                     <td className="font-mono text-slate-700">
-                      {rec.x.toFixed(1)}
+                      {typeof rec.x === 'number' ? rec.x.toFixed(1) : rec.x}
                     </td>
                     <td className="font-mono text-slate-700">
-                      {rec.y.toFixed(1)}
+                      {typeof rec.y === 'number' ? rec.y.toFixed(1) : rec.y}
                     </td>
                   </tr>
                 ))}
@@ -214,4 +209,3 @@ export const RecordsTable = ({
 };
 
 export default RecordsTable;
-

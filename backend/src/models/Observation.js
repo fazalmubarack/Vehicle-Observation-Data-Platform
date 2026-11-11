@@ -9,8 +9,9 @@ const observationSchema = new mongoose.Schema(
       index: true,
     },
     time: {
-      type: Date,
+      type: String,
       required: [true, 'Observation time is required'],
+      trim: true,
       index: true,
     },
     vehicle_class: {
@@ -43,4 +44,3 @@ observationSchema.index({ datasetId: 1, x: 1 });
 observationSchema.index({ datasetId: 1, y: 1 });
 
 module.exports = mongoose.model('Observation', observationSchema);
-
